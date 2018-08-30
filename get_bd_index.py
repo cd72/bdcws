@@ -21,7 +21,9 @@ def save_index_page(page_number, page_source):
 
 def get_dt_links(page_source):
     re_dt_links = re.compile(r'''
-        http:\/\/bigdave44\.com        # base url
+        http:\/\/bi
+        gda
+        ve44\.com        # base url
         \/                             # slash
         \d{4}                          # year
         \/                             # slash

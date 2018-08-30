@@ -1,6 +1,5 @@
 import os
 import re
-import logging
 import logging.config
 
 re_find_headers=re.compile(r'''
@@ -76,7 +75,7 @@ def get_clues(full_text):
     lines = iter(clue_text.splitlines())
 
     for line in lines:
-        logger.debug(f"line : {line}")
+        logger.debug(f"READING line : {line}")
         m = re_clue_line.search(line)
         if m:
 
@@ -90,31 +89,31 @@ def get_clues(full_text):
 
             clues_processed += 1
         else:
-            print ("line does not look like a clue")
+            logger.debug("line does not look like a clue")
         if clues_processed >= 5:
             break
+
+def main():
+    logger.info("test message")
+    directory_in_str="dts/"
+    directory = os.fsencode(directory_in_str)
+
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+
+        if filename.endswith(".html"):
+            # print(os.path.join(directory, filename))
+            logger.info(f"Filename is {filename}")
+            with open(os.path.join(directory, file), encoding='utf-8') as fp:
+                full_text = fp.read()
+                all_clues = get_clues(full_text)
+            # break
+        else:
+            continue
+        break
 
 
 logging.config.fileConfig('logging.conf')
 logger = logging.getLogger(__name__)
-logger.info("test message")
-
-
-directory_in_str="dts/"
-directory = os.fsencode(directory_in_str)
-
-
-for file in os.listdir(directory):
-    filename = os.fsdecode(file)
-
-    if filename.endswith(".html"):
-        # print(os.path.join(directory, filename))
-        logger.info(f"Filename is {filename}")
-        with open(os.path.join(directory, file), encoding='utf-8') as fp:
-            full_text = fp.read()
-            all_clues = get_clues(full_text)
-        # break
-    else:
-        continue
-    break
-
+if __name__ == '__main__':
+    main()

@@ -33,8 +33,6 @@ def save_dt_page(full_file_name, page_source):
 
 driver = webdriver.Firefox()
 
-#dt_url="http://bigdave44.com/2018/07/19/dt-28795/"
-
 with open("save_links.txt", encoding='utf-8') as url_file:
     for dt_url in url_file:
         save_name = get_save_file_name(dt_url)
