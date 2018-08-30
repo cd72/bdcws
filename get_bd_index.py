@@ -1,7 +1,7 @@
 from selenium import webdriver
 import re
 import time
-
+import random
 
 def get_index_page(page_number):
     get_addr = "http://bi" + "gda" + "ve" + \
@@ -13,7 +13,7 @@ def get_index_page(page_number):
 
 
 def save_index_page(page_number, page_source):
-    with open("D:/projects/pycharm/bdpws/ind" + str(page_number) +
+    with open("indexes/ind" + str(page_number) +
               ".html", encoding='utf-8', mode='w') as sp:
         sp.write(page_source)
         sp.close()
@@ -37,7 +37,7 @@ def get_dt_links(page_source):
 
 
 def save_links(links):
-    with open("D:/projects/pycharm/bdpws/save_links.txt",
+    with open("save_links.txt",
               encoding='utf-8', mode='a') as sp:
         for link in links:
             print(link)
@@ -47,11 +47,14 @@ def save_links(links):
 
 driver = webdriver.Firefox()
 
-for page in range(5, 10):
+for page in range(85, 105):
     print("Getting page " + str(page))
     the_page_source = get_index_page(page)
     save_index_page(page, the_page_source)
     the_page_links = get_dt_links(the_page_source)
     save_links(the_page_links)
+    print("saved")
+    time.sleep(random.randint(100, 900))
+    print("sleep done")
 
 driver.close()

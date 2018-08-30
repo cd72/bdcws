@@ -2,6 +2,7 @@ from selenium import webdriver
 import re
 import os.path
 import time
+import random
 
 def get_dt_page(dt_url):
     print(dt_url)
@@ -19,7 +20,7 @@ def get_save_file_name(dt_url):
         raise(ValueError, 'Invalid dt url', dt_url)
 
     print(file_base_name)
-    full_file_name="D:/projects/pycharm/bdpws/dts/" + file_base_name + ".html"
+    full_file_name="dts/" + file_base_name + ".html"
     print(full_file_name)
     return full_file_name
 
@@ -34,7 +35,7 @@ driver = webdriver.Firefox()
 
 #dt_url="http://bigdave44.com/2018/07/19/dt-28795/"
 
-with open("D:/projects/pycharm/bdpws/save_links.txt", encoding='utf-8') as url_file:
+with open("save_links.txt", encoding='utf-8') as url_file:
     for dt_url in url_file:
         save_name = get_save_file_name(dt_url)
         if os.path.isfile(save_name):
@@ -42,6 +43,9 @@ with open("D:/projects/pycharm/bdpws/save_links.txt", encoding='utf-8') as url_f
         else:
             the_page_source=get_dt_page(dt_url)
             save_dt_page(save_name, the_page_source)
+            print("saved")
+            time.sleep(random.randint(300,1200))
+            print("sleep done")
 
 driver.close()
 
