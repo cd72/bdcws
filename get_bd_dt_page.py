@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 import re
 import os.path
 import time
@@ -6,8 +7,12 @@ import random
 
 def get_dt_page(dt_url):
     print(dt_url)
-    driver.get(dt_url)
-    time.sleep(145)
+    try:
+        driver.get(dt_url)
+    except TimeoutException as te:
+            print ("Exception" + str(te))
+    print ("got it")
+    time.sleep(45)
     return driver.page_source
 
 
@@ -32,6 +37,7 @@ def save_dt_page(full_file_name, page_source):
 
 
 driver = webdriver.Firefox()
+driver.set_page_load_timeout(30)
 
 with open("save_links.txt", encoding='utf-8') as url_file:
     for dt_url in url_file:
@@ -42,7 +48,7 @@ with open("save_links.txt", encoding='utf-8') as url_file:
             the_page_source=get_dt_page(dt_url)
             save_dt_page(save_name, the_page_source)
             print("saved")
-            time.sleep(random.randint(300,1200))
+            time.sleep(random.randint(40,50))
             print("sleep done")
 
 driver.close()
