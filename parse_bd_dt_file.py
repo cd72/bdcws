@@ -110,7 +110,7 @@ def parse_clue(clue_line, crossword_clue):
         crossword_clue.clue_length=m.group(3)
         trailing_text=m.group(4)
     else:
-        raise ValueError('The clue finding regex failed.')
+        raise ValueError('The clue finding regex failed..')
 
     return trailing_text
 
